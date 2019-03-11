@@ -98,7 +98,7 @@ export default {
   name: 'app',
   data () {
     return {
-      imgPath: '/src/assets/images/',
+      imgPath: 'src/assets/images/',
       typeSelected:{productValue: '', productName:''},
       colorSelected:'',
       filterCounter: 0,
@@ -168,7 +168,7 @@ export default {
       if (this.typeSelected == null && this.colorSelected == null){        
         window.location.href = '/#/';
       }else{        
-        filtersStr = '/search?type=' + ( this.typeSelected == null ? null : this.typeSelected.productValue ) + '&color=' + ( this.colorSelected == null ? null : this.colorSelected ) ;
+        filtersStr = 'search?type=' + ( this.typeSelected == null ? null : this.typeSelected.productValue ) + '&color=' + ( this.colorSelected == null ? null : this.colorSelected ) ;
         console.log('filtersStr -',filtersStr)
         window.location.href = filtersStr;
       }
