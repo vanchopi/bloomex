@@ -168,7 +168,7 @@ export default {
       if (this.typeSelected == null && this.colorSelected == null){        
         window.location.href = '/#/';
       }else{        
-        filtersStr = 'search?type=' + ( this.typeSelected == null ? null : this.typeSelected.productValue ) + '&color=' + ( this.colorSelected == null ? null : this.colorSelected ) ;
+        filtersStr = '?type=' + ( this.typeSelected == null ? null : this.typeSelected.productValue ) + '&color=' + ( this.colorSelected == null ? null : this.colorSelected ) ;
         console.log('filtersStr -',filtersStr)
         window.location.href = filtersStr;
       }
