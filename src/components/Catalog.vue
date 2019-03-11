@@ -82,6 +82,9 @@
           </li>
         </ul>
       </div>
+      <div class="message-cont">
+        {{message}}
+      </div>
     </div>  
   	<router-view></router-view> 
   </div>
@@ -101,7 +104,7 @@ export default {
       filterCounter: 0,
       btTrigger: false,
       windowWidth: 0,
-      windowHeight: 0,
+      message:'',
       optionsName:[
         { productValue: 'Boutonnieres', productName:'Boutonnieres'},
         { productValue: 'Cake_Toppers', productName:'Cake Toppers'},
@@ -114,29 +117,29 @@ export default {
         { productValue: 'Rose_Petals', productName:'Rose Petals'},
         { productValue: 'Value_Packages', productName:'Value Packages'},
       ], 
-      optionsColor:['white', 'mix'],
+      optionsColor:['white', 'mix', 'blue', 'cream', 'orange'],
       flag: false,
       flowers:[
         { title: 'Test flowers #1', price: 199.99, productType: 'Boutonnieres', color: 'mix', img: 'fl1.jpg'},
         { title: 'Test flowers #2', price: 197.99, productType: 'Cake_Toppers', color: 'mix', img: 'fl2.jpg'},
         { title: 'Test flowers #3', price: 195.99, productType: 'Centerpieces', color: 'white', img: 'fl3.jpg'},
-        { title: 'Test flowers #4', price: 217.99, productType: 'Corsages', color: 'white', img: 'fl4.jpg'},
+        { title: 'Test flowers #4', price: 217.99, productType: 'Corsages', color: 'blue', img: 'fl4.jpg'},
         { title: 'Test flowers #5', price: 199.99, productType: 'Bouquets', color: 'mix', img: 'fl5.jpg'},
-        { title: 'Test flowers #6', price: 197.99, productType: 'Bridal_Bouquets', color: 'mix', img: 'fl6.jpg'},
-        { title: 'Test flowers #7', price: 195.99, productType: 'Bridesmaid_Bouquets', color: 'white', img: 'fl7.jpg'},
-        { title: 'Test flowers #8', price: 217.99, productType: 'Flower_Girl_and_Toss_Bouquets', color: 'white', img: 'fl8.jpg'},
-        { title: 'Test flowers #9', price: 199.99, productType: 'Rose_Petals', color: 'mix', img: 'fl9.jpg'},
-        { title: 'Test flowers #10', price: 197.99, productType: 'Value_Packages', color: 'mix', img: 'fl10.jpg'},
+        { title: 'Test flowers #6', price: 197.99, productType: 'Bridal_Bouquets', color: 'blue', img: 'fl6.jpg'},
+        { title: 'Test flowers #7', price: 195.99, productType: 'Bridesmaid_Bouquets', color: 'cream', img: 'fl7.jpg'},
+        { title: 'Test flowers #8', price: 217.99, productType: 'Flower_Girl_and_Toss_Bouquets', color: 'blue', img: 'fl8.jpg'},
+        { title: 'Test flowers #9', price: 199.99, productType: 'Rose_Petals', color: 'orange', img: 'fl9.jpg'},
+        { title: 'Test flowers #10', price: 197.99, productType: 'Value_Packages', color: 'cream', img: 'fl10.jpg'},
         { title: 'Test flowers #11', price: 195.99, productType: 'Bridesmaid_Bouquets', color: 'white', img: 'fl11.jpg'},
-        { title: 'Test flowers #12', price: 217.99, productType: 'Flower_Girl_and_Toss_Bouquets', color: 'white', img: 'fl12.jpg'},
-        { title: 'Test flowers #13', price: 199.99, productType: 'Boutonnieres', color: 'mix', img: 'fl13.jpg'},
-        { title: 'Test flowers #14', price: 197.99, productType: 'Cake_Toppers', color: 'mix', img: 'fl14.jpg'},
-        { title: 'Test flowers #15', price: 195.99, productType: 'Centerpieces', color: 'white', img: 'fl15.jpg'},
+        { title: 'Test flowers #12', price: 217.99, productType: 'Flower_Girl_and_Toss_Bouquets', color: 'orange', img: 'fl12.jpg'},
+        { title: 'Test flowers #13', price: 199.99, productType: 'Boutonnieres', color: 'cream', img: 'fl13.jpg'},
+        { title: 'Test flowers #14', price: 197.99, productType: 'Cake_Toppers', color: 'blue', img: 'fl14.jpg'},
+        { title: 'Test flowers #15', price: 195.99, productType: 'Centerpieces', color: 'orange', img: 'fl15.jpg'},
         { title: 'Test flowers #16', price: 217.99, productType: 'Corsages', color: 'white', img: 'fl16.jpg'},
-        { title: 'Test flowers #17', price: 217.99, productType: 'Flower_Girl_and_Toss_Bouquets', color: 'white', img: 'fl17.jpg'},
+        { title: 'Test flowers #17', price: 217.99, productType: 'Flower_Girl_and_Toss_Bouquets', color: 'blue', img: 'fl17.jpg'},
         { title: 'Test flowers #18', price: 199.99, productType: 'Rose_Petals', color: 'mix', img: 'fl18.jpg'},
-        { title: 'Test flowers #19', price: 197.99, productType: 'Value_Packages', color: 'mix', img: 'fl19.jpg'},
-        { title: 'Test flowers #20', price: 195.99, productType: 'Bridesmaid_Bouquets', color: 'white', img: 'fl20.jpg'}
+        { title: 'Test flowers #19', price: 197.99, productType: 'Value_Packages', color: 'blue', img: 'fl19.jpg'},
+        { title: 'Test flowers #20', price: 195.99, productType: 'Bridesmaid_Bouquets', color: 'cream', img: 'fl20.jpg'}
       ],
       flowersDefault:[]
     }
@@ -147,9 +150,7 @@ export default {
   mounted() {
     this.$nextTick(function() {
       window.addEventListener('resize', this.getWindowWidth);
-      window.addEventListener('resize', this.getWindowHeight);
       this.getWindowWidth()
-      this.getWindowHeight()
     })
 
   },
@@ -160,10 +161,6 @@ export default {
   methods:{
     getWindowWidth(event) {
       this.windowWidth = document.documentElement.clientWidth;
-    },
-
-    getWindowHeight(event) {
-      this.windowHeight = document.documentElement.clientHeight;
     },
   	getFilters(){
       var filtersStr = '';
@@ -194,6 +191,11 @@ export default {
           this.flowersDefault.push(tmp[i]);
         }
       }
+      if (this.flowersDefault.length > 0){
+        this.message = ''
+      }else{
+        this.message = "can't find anything"
+      }
       return this.flowersDefault;
     },
     createType(tmpType){
@@ -207,7 +209,16 @@ export default {
           }
       return output;
     },
-    checkFilters(){
+    checkCounter(){
+      if( this.typeSelected != null ){
+        this.filterCounter++
+      }
+      if( this.colorSelected != null ){
+        this.filterCounter++
+      }
+      return this.filterCounter
+    },
+    checkFilters(){      
       var href = window.location.href;
       if( href.indexOf('?') != -1 ){
         var tmp = href.split('&');
@@ -215,6 +226,7 @@ export default {
         var tmpColor = tmp[1].split('=')[1].split('#')[0];
         tmpColor == 'null' ? this.colorSelected = null : this.colorSelected = tmpColor;
         tmpType == 'null' ? this.typeSelected = null : this.typeSelected = this.createType(tmpType);  
+        this.checkCounter();
         this.setFilters(tmpType, tmpColor);        
       }else{
         this.typeSelected = null;
@@ -232,239 +244,14 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.getWindowWidth);
-    window.removeEventListener('resize', this.getWindowHeight);
   }
 }
 </script>
 
 <style>
   
-  body.over{
-    overflow: hidden;
-  }
-
-  .items-list{
-
-  }
-
-  ul{
-    list-style: none;
-    padding: 0;
-    border-top: 1px solid #e8e8e8;
-  }
-  ul li{
-    display: inline-block;
-    width: calc(25% - 1px);
-    border-right: 1px solid #e8e8e8;
-    border-bottom: 1px solid #e8e8e8;
-  }
-
-  ul li.item .item-img{
-    width: 75%;
-    margin: auto;
-  }
-
-  ul li.item .item-buttons{
-    max-height: 240px;
-    position: relative;
-  }
-
-  ul li.item .item-img img{
-    width:100%;
-  }
-
-  ul li.item .item-title{
-    font-size: 16px;
-    margin-top: 2%;
+  .message-cont{
     text-align: center;
-  }
-
-  ul li.item .item-price i{
-    font-style: normal;
-    font-size: 16px;
-    margin-right: 10px;
-    color: #999999;
-  }
-
-  ul li.item .item-price{
-    text-align: center;
-    margin: 2% 0;
-    font-size: 1.5rem;
-  }
-
-  li.item:hover span.action-btn {
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.09);
-    -webkit-transition: all .3s;
-    -o-transition: all .3s;
-    transition: all .3s;
-  }
-  
-
-  li.item:hover .action-buttons {
-    bottom: 5px;
-    opacity: 1;
-    -webkit-transition: all .3s;
-    -o-transition: all .3s;
-    transition: all .3s;
-  }
-
-  .action-buttons{
-    width: 100%;
-    padding: 0 10px;
-    opacity: 0;
-    -webkit-transition: all .3s;
-    -o-transition: all .3s;
-    transition: all .3s;
-    max-width: 165px;
-    position: absolute;
-    left: 50%;
-    -webkit-transform: translate(-50%, 0);
-    -ms-transform: translate(-50%, 0);
-    transform: translate(-50%, 0);
-    bottom: -20px;
-    display: -webkit-inline-box;
-    display: -ms-inline-flexbox;
-    display: inline-flex;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-  }
-
-  span.action-btn{
-    height: 45px;
-    width: 45px;
-    display: inline-block;
-    background-color: #ffffff;
-    -webkit-box-shadow: transparent;
-    box-shadow: transparent;
-    cursor: pointer;
-  }
-
-  span.action-btn.search {
-    background: url(https://bunchesdirect.com/static/img/icons/svg/search-product-button.svg) no-repeat center center;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
-  }
-
-  span.action-btn.basket {
-    background: url(https://bunchesdirect.com/static/img/icons/svg/basket-product-button.svg) no-repeat center center;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
-  }
-
-  span.action-btn.favorites {
-    background: url(https://bunchesdirect.com/static/img/icons/svg/favorites-product.svg) no-repeat center center;
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
-  }
-
-  span.action-btn.favorites:hover {
-    background: url(https://bunchesdirect.com/static/img/icons/svg/favorites-product-hover.svg);
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
-  }
-
-  span.action-btn.basket:hover {
-    background: url(https://bunchesdirect.com/static/img/icons/svg/basket-product-button-hover.svg);
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
-  }
-
-  span.action-btn.search:hover {
-    background: url(https://bunchesdirect.com/static/img/icons/svg/search-product-button-hover.svg);
-    -webkit-transition: .3s;
-    -o-transition: .3s;
-    transition: .3s;
-  }
-
-  .v-select ul li{
-    width: 100%;
-  }
-
-  .selects-container{
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .selects-container .select{
-    width: calc(50% - 2px);
-    margin: auto;
-  }
-
-  .dropdown.single.searchable{
-    color: #000000;
-    border-radius: 0px;
-    border: none; 
-  }
-
-  .dropdown.single.searchable .dropdown-toggle{
-    position: relative;
-  }
-
-  .v-select .open-indicator, 
-  .v-select .open-indicator:before{
-    position: absolute;
-    left: 6px;
-    top: 6px;
-  }
-
-  .v-select .open-indicator:before {
-    border-color: rgba(255,108,136,1);
-  }
-
-  .v-select .dropdown-menu>.highlight>a {
-    background: rgba(255,108,136,1);
-  }
-
-  .v-select li>a {
-    padding: 9px 20px;
-  }
-
-  .dropdown.single.searchable .dropdown-toggle{
-    border: none;
-    border-radius: 0;
-    background-color: #f6f6f6;
-  }
-
-  .v-select .selected-tag{
-    padding: 3px 5px 3px 30px;
-    min-width: 500px;
-  }
-
-  .v-select input[type=search], .v-select input[type=search]:focus{
-    padding: 3px 5px 3px 30px;
-  }
-
-  .v-select .dropdown-toggle .clear{
-    background-color: #ff6c88;
-    width: 29px;
-    height: 29px;
-    border-radius: 50%;
-    display: inline-flex;
-    margin-top: 5px;
-  }
-
-  .v-select .dropdown-toggle .clear span{
-    margin: auto;
-    color: #f6f6f6;
-    font-size: 23px;
-  }
-
-  .wrapper{
-    padding: 25px 20px;
-  }
-
-  .v-select .vs__selected-options{
-    overflow: hidden;
-    max-height: 34px;
   }
 
   .filter-button{
