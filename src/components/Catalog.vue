@@ -5,7 +5,7 @@
       @click="btTrigger = true; bodyTag()"
     >
         <div class="bt-cont">
-          <img src="/src/assets/images/filter.png">
+          <img src="src/assets/images/filter.png">
         </div>
         <i>{{filterCounter}}</i>
       </a>
